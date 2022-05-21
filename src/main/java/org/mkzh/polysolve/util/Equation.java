@@ -1,6 +1,5 @@
 package org.mkzh.polysolve.util;
 
-import jas.core.Compiler;
 import org.mkzh.polysolve.exception.EquationSyntaxException;
 
 import java.math.BigDecimal;
@@ -9,14 +8,15 @@ import java.util.List;
 
 public class Equation {
     public static List<BigDecimal> getCoefficientsFromEquation(String equation, String variable) throws EquationSyntaxException {
-        String rootExpression = getRootExpression(equation);
-        System.out.println(rootExpression);
+        String rootExpression = getSimplifiedRootExpression(equation);
+        List<String> terms = Expression.getTermsFromSimplifiedExpression(rootExpression);
+        System.out.println(terms);
 
         return Arrays.asList(new BigDecimal("2"));
     }
 
-    private static String getRootExpression(String equation) throws EquationSyntaxException {
-        String res = removeWhitespaces(equation);
+    private static String getSimplifiedRootExpression(String equation) throws EquationSyntaxException {
+        String res = Common.removeWhitespaces(equation);
         if (res.endsWith("=0")) {
             res = equation.substring(0, equation.length() - 2);
         } else if (res.contains("=")) {
@@ -36,14 +36,10 @@ public class Equation {
             }
         }
 
-        return simplifyExpression(res);
+        return Expression.simplify(res);
     }
 
-    private static String simplifyExpression(String expression) {
-        return Compiler.compile(expression).expand().simplify().toString();
-    }
 
-    private static String removeWhitespaces(String str) {
-        return str.replaceAll("\\s+", "");
-    }
+
+
 }
