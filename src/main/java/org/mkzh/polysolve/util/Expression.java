@@ -12,7 +12,7 @@ public class Expression {
     }
 
     public static List<String> getTermsFromSimplifiedExpression(String expression) {
-        return Arrays.asList(expression.split("\\+"));
+        return Arrays.asList(expression.split("(?<!\\([^(])\\+(?![)])"));
     }
 
     private static String translateForJASCompiler(String expression) {

@@ -16,5 +16,9 @@ public class MiscTest {
         assertDoesNotThrow(() -> {
             Polysolve.solve("x^2-(1+x^2)^2+3sin(x)+2", "x");
         });
+
+        assertDoesNotThrow(() -> {
+            Polysolve.solve("5x^3-2x^2+5x-34", "x");
+        });
     }
 }

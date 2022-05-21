@@ -10,6 +10,7 @@ public class Equation {
     public static List<BigDecimal> getCoefficientsFromEquation(String equation, String variable) throws EquationSyntaxException {
         String rootExpression = getSimplifiedRootExpression(equation);
         List<String> terms = Expression.getTermsFromSimplifiedExpression(rootExpression);
+        System.out.println(rootExpression);
         System.out.println(terms);
 
         return Arrays.asList(new BigDecimal("2"));
