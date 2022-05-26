@@ -8,19 +8,19 @@ import java.util.List;
 import java.util.Map;
 
 public class Term {
-    public static List<String> getCoefficientsFromTerms(List<String> terms) throws EquationSyntaxException {
+    public static List<String> getCoefficientsFromTerms(List<String> terms, String baseVariable) throws EquationSyntaxException {
         // initialise a list to store up to 5 coefficients (for solving up to quartics)
         List<String> coefficients = Arrays.asList(new String[5]);
         Map<String, Integer> exponentVariableToIndex = new LinkedHashMap<>() {{
-            put("x^4", 4);
-            put("x^3", 3);
-            put("x^2", 2);
-            put("x^1", 1);
+            put(baseVariable.concat("^4"), 4);
+            put(baseVariable.concat("^3"), 3);
+            put(baseVariable.concat("^2"), 2);
+            put(baseVariable.concat("^1"), 1);
         }};
 
         for (String term : terms) {
-            boolean hasCoefficient = getConstantCoefficient(coefficients, term)
-                    || getLinearVariableCoefficient(coefficients, term)
+            boolean hasCoefficient = getConstantCoefficient(coefficients, baseVariable, term)
+                    || getLinearVariableCoefficient(coefficients, baseVariable, term)
                     || getExponentVariableCoefficients(coefficients, term, exponentVariableToIndex);
 
             if (!hasCoefficient) {
@@ -41,16 +41,16 @@ public class Term {
         return false;
     }
 
-    private static boolean getLinearVariableCoefficient(List<String> coefficients, String term) throws EquationSyntaxException {
-        if (term.contains("x") && !term.contains("x^")) {
-            updateCoefficientsList(coefficients, term, "x", 1);
+    private static boolean getLinearVariableCoefficient(List<String> coefficients, String variable, String term) throws EquationSyntaxException {
+        if (term.contains(variable) && !term.contains(variable.concat("^"))) {
+            updateCoefficientsList(coefficients, term, variable, 1);
             return true;
         }
         return false;
     }
 
-    private static boolean getConstantCoefficient(List<String> coefficients, String term) throws EquationSyntaxException {
-        if (!term.contains("x")) {
+    private static boolean getConstantCoefficient(List<String> coefficients, String baseVariable, String term) throws EquationSyntaxException {
+        if (!term.contains(baseVariable)) {
             updateCoefficientsList(coefficients, term, "", 0);
             return true;
         }

@@ -8,7 +8,7 @@ public class Equation {
     public static List<String> getCoefficientsFromEquation(String equation, String variable) throws EquationSyntaxException {
         String rootExpression = getSimplifiedRootExpression(equation);
         List<String> terms = Expression.getTermsFromSimplifiedExpression(rootExpression);
-        List<String> coefficients = Term.getCoefficientsFromTerms(terms);
+        List<String> coefficients = Term.getCoefficientsFromTerms(terms, variable);
 
         return coefficients;
     }
