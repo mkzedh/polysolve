@@ -2,18 +2,15 @@ package org.mkzh.polysolve.util;
 
 import org.mkzh.polysolve.exception.EquationSyntaxException;
 
-import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.List;
 
 public class Equation {
-    public static List<BigDecimal> getCoefficientsFromEquation(String equation, String variable) throws EquationSyntaxException {
+    public static List<String> getCoefficientsFromEquation(String equation, String variable) throws EquationSyntaxException {
         String rootExpression = getSimplifiedRootExpression(equation);
         List<String> terms = Expression.getTermsFromSimplifiedExpression(rootExpression);
-        System.out.println(rootExpression);
-        System.out.println(terms);
+        List<String> coefficients = Term.getCoefficientsFromTerms(terms);
 
-        return Arrays.asList(new BigDecimal("2"));
+        return coefficients;
     }
 
     private static String getSimplifiedRootExpression(String equation) throws EquationSyntaxException {
