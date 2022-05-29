@@ -4,12 +4,16 @@ import org.mkzh.polysolve.method.Method;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Linear extends Method {
     @Override
     public List<BigDecimal> solve(List<BigDecimal> coefficients, MathContext mathContext) {
-        return Arrays.asList(new BigDecimal("1"));
+        return findRoot(coefficients.get(1), coefficients.get(0), mathContext);
+    }
+
+    private List<BigDecimal> findRoot(BigDecimal a, BigDecimal c, MathContext mathContext) {
+        return Collections.singletonList(c.negate().divide(a, mathContext));
     }
 }

@@ -13,6 +13,7 @@ public class Quadratic extends Method {
     public List<BigDecimal> solve(List<BigDecimal> coefficients, MathContext mathContext) {
         return findRoots(coefficients.get(2), coefficients.get(1), coefficients.get(0), mathContext);
     }
+
     private List<BigDecimal> findRoots(BigDecimal a, BigDecimal b, BigDecimal c, MathContext mathContext) {
         BigDecimal discriminant = BigDecimalMath.pow(b, 2, mathContext).subtract(BigDecimal.valueOf(4).multiply(a).multiply(c));
 
