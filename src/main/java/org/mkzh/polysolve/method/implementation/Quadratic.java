@@ -1,4 +1,4 @@
-package org.mkzh.polysolve.method;
+package org.mkzh.polysolve.method.implementation;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -6,9 +6,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import ch.obermuhlner.math.big.BigDecimalMath;
+import org.mkzh.polysolve.method.Method;
 
-public class Quadratic {
-    public static List<BigDecimal> findRoots(BigDecimal a, BigDecimal b, BigDecimal c, MathContext mathContext) {
+public class Quadratic extends Method {
+    @Override
+    public List<BigDecimal> solve(List<BigDecimal> coefficients, MathContext mathContext) {
+        return findRoots(coefficients.get(2), coefficients.get(1), coefficients.get(0), mathContext);
+    }
+    private List<BigDecimal> findRoots(BigDecimal a, BigDecimal b, BigDecimal c, MathContext mathContext) {
         BigDecimal discriminant = BigDecimalMath.pow(b, 2, mathContext).subtract(BigDecimal.valueOf(4).multiply(a).multiply(c));
 
         // check for negative discriminant
@@ -27,7 +32,7 @@ public class Quadratic {
         return roots;
     }
 
-    private static BigDecimal getQuadraticRoot(BigDecimal a, BigDecimal b, BigDecimal discriminant, boolean isFirstRoot, MathContext mathContext) {
+    private BigDecimal getQuadraticRoot(BigDecimal a, BigDecimal b, BigDecimal discriminant, boolean isFirstRoot, MathContext mathContext) {
         BigDecimal sqrtDiscriminant = BigDecimalMath.sqrt(discriminant, mathContext);
         if (!isFirstRoot) {
             sqrtDiscriminant = sqrtDiscriminant.negate();
