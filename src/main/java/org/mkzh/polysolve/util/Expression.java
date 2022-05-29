@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Expression {
     public static String simplify(String expression) {
-        return Compiler.compile(translateForJASCompiler(expression)).expand().simplify().toString();
+        return translateForEvalExLibrary(Compiler.compile(translateForJASCompiler(expression)).expand().simplify().toString());
     }
 
     public static List<String> getTermsFromSimplifiedExpression(String expression) {
@@ -19,9 +19,18 @@ public class Expression {
         return abbreviateInverseTrigFunctions(expression);
     }
 
+    private static String translateForEvalExLibrary(String expression) {
+        return makeTrigFunctionsRadian(expression);
+    }
+
     private static String abbreviateInverseTrigFunctions(String expression) {
-        return StringUtils.replaceEach(expression, new String[]{"arcsin", "arccos", "arctan", "arcsec", "arccot", "arccsc"},
-                new String[]{"asin", "acos", "atan", "asec", "acot", "acsc"});
+        return StringUtils.replaceEach(expression, new String[]{"arcsin", "arccos", "arctan", "arccot", "arcsec", "arccsc"},
+                new String[]{"asin", "acos", "atan", "acot", "asec", "acsc"});
+    }
+
+    private static String makeTrigFunctionsRadian(String expression) {
+        return StringUtils.replaceEach(expression, new String[]{"sin", "cos", "tan", "cot", "sec", "csc", "asin", "acos", "atan", "acot", "asec", "acsc"},
+                new String[]{"sinr", "cosr", "tanr", "cotr", "secr", "cscr", "asinr", "acosr", "atanr", "acotr", "asecr", "acscr"});
     }
 }
 
