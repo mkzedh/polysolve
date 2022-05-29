@@ -29,7 +29,7 @@ public class Term {
             }
         }
 
-        return coefficients;
+        return pruneLeadingZeroCoefficients(coefficients);
     }
 
     private static boolean getExponentVariableCoefficients(List<String> coefficients, String term, Map<String, Integer> indexMap) throws EquationSyntaxException {
@@ -55,7 +55,6 @@ public class Term {
             updateCoefficientsList(coefficients, term, StringUtils.EMPTY, 0);
             return true;
         }
-
         return false;
     }
 
@@ -63,7 +62,6 @@ public class Term {
         if (coefficients.get(index) != null) {
             throwPolynomialSimplificationException();
         }
-
         // if coefficient is constant, set coefficient as term
         coefficients.set(index, variable.isEmpty() ? term : getCoefficientFromTerm(term, variable));
     }
@@ -74,5 +72,15 @@ public class Term {
 
     private static void throwPolynomialSimplificationException() throws EquationSyntaxException {
         throw new EquationSyntaxException("Equation cannot be simplified to solvable polynomial of degree 4 or less");
+    }
+
+    private static List<String> pruneLeadingZeroCoefficients(List<String> coefficients) {
+        int i;
+        for (i = coefficients.size(); i-- > 0;) {
+            if (coefficients.get(i) != null) {
+                break;
+            }
+        }
+        return coefficients.subList(0, i+1);
     }
 }
