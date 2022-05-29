@@ -1,6 +1,7 @@
 package org.mkzh.polysolve.util;
 
 import org.mkzh.polysolve.exception.EquationSyntaxException;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -51,7 +52,7 @@ public class Term {
 
     private static boolean getConstantCoefficient(List<String> coefficients, String baseVariable, String term) throws EquationSyntaxException {
         if (!term.contains(baseVariable)) {
-            updateCoefficientsList(coefficients, term, "", 0);
+            updateCoefficientsList(coefficients, term, StringUtils.EMPTY, 0);
             return true;
         }
 
