@@ -62,19 +62,16 @@ public class Term {
         if (coefficients.get(index) != null) {
             throwPolynomialSimplificationException();
         }
-        coefficients.set(index, getCoefficientFromTerm(term, variable));
+
+        // if coefficient is constant, set coefficient as term
+        coefficients.set(index, variable.isEmpty() ? term : getCoefficientFromTerm(term, variable));
     }
 
     private static String getCoefficientFromTerm(String term, String variable) {
-        if (variable.isEmpty()) {
-            // constant term
-            return term;
-        }
-
         return term.replace(variable, "1");
     }
 
     private static void throwPolynomialSimplificationException() throws EquationSyntaxException {
-        throw new EquationSyntaxException("Equation cannot be simplified to solvable polynomial");
+        throw new EquationSyntaxException("Equation cannot be simplified to solvable polynomial of degree 4 or less");
     }
 }

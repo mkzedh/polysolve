@@ -45,6 +45,14 @@ public class GetCoefficientsTest {
     }
 
     @Test
+    public void testLinearAdvanced() {
+        assertDoesNotThrow(() -> {
+            assertEquals(Arrays.asList("((-18/7))", "1*(23/7)", null, null, null), Equation.getCoefficientsFromEquation("4x+2=(5x+32)/7", "x"));
+        });
+    }
+
+
+    @Test
     public void testConstant() {
         assertDoesNotThrow(() -> {
             assertEquals(Arrays.asList("-64", null, null, null, null), Equation.getCoefficientsFromEquation("-64", "x"));
