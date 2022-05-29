@@ -18,7 +18,7 @@ public class Quadratic extends Method {
         BigDecimal discriminant = BigDecimalMath.pow(b, 2, mathContext).subtract(BigDecimal.valueOf(4).multiply(a).multiply(c));
 
         // check for negative discriminant
-        if (discriminant.compareTo(BigDecimal.valueOf(0)) < 0) {
+        if (isDiscriminantNegative(discriminant)) {
             return Collections.emptyList();
         }
 
@@ -26,7 +26,7 @@ public class Quadratic extends Method {
         roots.add(getQuadraticRoot(a, b, discriminant, true, mathContext));
 
         // do not attempt to find second solution when discriminant is 0
-        if (discriminant.compareTo(BigDecimal.valueOf(0)) != 0) {
+        if (isDiscriminantZero(discriminant)) {
             roots.add(getQuadraticRoot(a, b, discriminant, false, mathContext));
         }
 
@@ -40,5 +40,13 @@ public class Quadratic extends Method {
         }
 
         return b.negate(mathContext).add(sqrtDiscriminant).divide(a.multiply(BigDecimal.valueOf(2)), mathContext);
+    }
+
+    private boolean isDiscriminantNegative(BigDecimal discriminant) {
+        return discriminant.compareTo(BigDecimal.valueOf(0)) < 0;
+    }
+
+    private boolean isDiscriminantZero(BigDecimal discriminant) {
+        return discriminant.compareTo(BigDecimal.valueOf(0)) != 0;
     }
 }
