@@ -26,4 +26,10 @@ public class QuadraticTest {
     public void testNoSolution() {
         assertDoesNotThrow(() -> assertEquals(Collections.emptyList(), Polysolve.solve("-2x^2+5x-34", "x")));
     }
+
+    @Test
+    public void testNoLinearTerm() {
+        assertDoesNotThrow(() -> assertEquals(Arrays.asList(new BigDecimal("2.0"), new BigDecimal("-2.0")), Polysolve.solve("x^2-4", "x")));
+
+    }
 }

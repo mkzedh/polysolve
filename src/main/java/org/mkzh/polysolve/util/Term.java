@@ -10,7 +10,7 @@ import java.util.Map;
 public class Term {
     public static List<String> getCoefficientsFromTerms(List<String> terms, String baseVariable) throws EquationSyntaxException {
         // initialise a list to store up to 5 coefficients (for solving up to quartics)
-        List<String> coefficients = Arrays.asList(new String[5]);
+        List<String> coefficients = Arrays.asList(new String[] {"0", "0", "0", "0", "0"});
         Map<String, Integer> exponentVariableToIndex = new LinkedHashMap<>() {{
             put(baseVariable.concat("^4"), 4);
             put(baseVariable.concat("^3"), 3);
@@ -51,14 +51,14 @@ public class Term {
 
     private static boolean getConstantCoefficient(List<String> coefficients, String baseVariable, String term) throws EquationSyntaxException {
         if (!term.contains(baseVariable)) {
-            coefficients.set(0, coefficients.get(0) == null ? term : coefficients.get(0).concat("+").concat(term));
+            coefficients.set(0, coefficients.get(0) == "0" ? term : coefficients.get(0).concat("+").concat(term));
             return true;
         }
         return false;
     }
 
     private static void updateCoefficientsList(List<String> coefficients, String term, String variable, int index) throws EquationSyntaxException {
-        if (coefficients.get(index) != null) {
+        if (coefficients.get(index) != "0") {
             throwPolynomialSimplificationException();
         }
         // if coefficient is constant, set coefficient as term
@@ -76,7 +76,7 @@ public class Term {
     private static List<String> pruneLeadingZeroCoefficients(List<String> coefficients) {
         int i;
         for (i = coefficients.size(); i-- > 0;) {
-            if (coefficients.get(i) != null) {
+            if (coefficients.get(i) != "0") {
                 break;
             }
         }
