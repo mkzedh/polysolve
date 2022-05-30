@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import ch.obermuhlner.math.big.BigDecimalMath;
 import org.mkzh.polysolve.method.Method;
+import org.mkzh.polysolve.util.BigNumber;
 
 public class Quadratic extends Method {
     @Override
@@ -26,7 +27,7 @@ public class Quadratic extends Method {
         roots.add(getQuadraticRoot(a, b, discriminant, true, mathContext));
 
         // do not attempt to find second solution when discriminant is 0
-        if (isDiscriminantZero(discriminant)) {
+        if (!isDiscriminantZero(discriminant)) {
             roots.add(getQuadraticRoot(a, b, discriminant, false, mathContext));
         }
 
@@ -43,10 +44,10 @@ public class Quadratic extends Method {
     }
 
     private boolean isDiscriminantNegative(BigDecimal discriminant) {
-        return discriminant.compareTo(BigDecimal.valueOf(0)) < 0;
+        return BigNumber.isNegative(discriminant);
     }
 
     private boolean isDiscriminantZero(BigDecimal discriminant) {
-        return discriminant.compareTo(BigDecimal.valueOf(0)) != 0;
+        return BigNumber.isZero(discriminant);
     }
 }
