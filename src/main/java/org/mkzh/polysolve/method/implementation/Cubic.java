@@ -65,9 +65,7 @@ public class Cubic extends Method {
 
     // cbrt(0.5*val)
     private BigDecimal getCubeRootOfHalf(BigDecimal val, MathContext mathContext) {
-        boolean neg = BigNumber.isNegative(val);
-        BigDecimal res = BigDecimalMath.root((neg ? val.negate() : val).multiply(BigDecimal.valueOf(0.5)), BigDecimal.valueOf(3), mathContext);
-        return neg ? res.negate() : res;
+        return BigNumber.cubeRoot(val.multiply(BigDecimal.valueOf(0.5)), mathContext);
     }
 
     // val/3a
