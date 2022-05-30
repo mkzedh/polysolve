@@ -15,7 +15,7 @@ public class Quadratic extends Method {
     }
 
     private List<BigDecimal> findRoots(BigDecimal a, BigDecimal b, BigDecimal c, MathContext mathContext) {
-        BigDecimal discriminant = BigDecimalMath.pow(b, 2, mathContext).subtract(BigDecimal.valueOf(4).multiply(a).multiply(c));
+        BigDecimal discriminant = b.pow(2).subtract(BigDecimal.valueOf(4).multiply(a).multiply(c));
 
         // check for negative discriminant
         if (isDiscriminantNegative(discriminant)) {
