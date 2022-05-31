@@ -15,8 +15,14 @@ public class BigNumber {
         return val.equals(BigDecimal.ZERO);
     }
 
+    public static BigComplex possiblyImaginarySquareRoot(BigDecimal val, MathContext mathContext) {
+        boolean neg = isNegative(val);
+        BigDecimal res = BigDecimalMath.sqrt(neg ? val.negate() : val, mathContext);
+        return neg ? BigComplex.valueOf(res).multiply(BigComplex.I) : BigComplex.valueOf(res);
+    }
+
     public static BigDecimal cubeRoot(BigDecimal val, MathContext mathContext) {
-        boolean neg = BigNumber.isNegative(val);
+        boolean neg = isNegative(val);
         BigDecimal res = BigDecimalMath.root(neg ? val.negate() : val, BigDecimal.valueOf(3), mathContext);
         return neg ? res.negate() : res;
     }

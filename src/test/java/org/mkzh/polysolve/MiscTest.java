@@ -1,6 +1,11 @@
 package org.mkzh.polysolve;
 
+import ch.obermuhlner.math.big.BigDecimalMath;
 import org.junit.jupiter.api.Test;
+
+import java.math.BigDecimal;
+import java.math.MathContext;
+
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class MiscTest {
@@ -24,5 +29,10 @@ public class MiscTest {
         assertDoesNotThrow(() -> {
             Polysolve.solve("(5/2)x^3-2x^2+5x-34", "x");
         });
+    }
+
+    @Test
+    public void testMisc2() {
+        System.out.println(BigDecimalMath.root(BigDecimal.valueOf(-27), BigDecimal.valueOf(3), new MathContext(24)));
     }
 }

@@ -13,11 +13,11 @@ import java.util.List;
 
 public class Cubic extends Method {
     @Override
-    public List<BigDecimal> solve(List<BigDecimal> coefficients, MathContext mathContext) {
+    public List<BigComplex> solve(List<BigDecimal> coefficients, MathContext mathContext) {
         return findRoots(coefficients.get(3), coefficients.get(2), coefficients.get(1), coefficients.get(0), mathContext);
     }
 
-    private List<BigDecimal> findRoots(BigDecimal a, BigDecimal b, BigDecimal c, BigDecimal d, MathContext mathContext) {
+    private List<BigComplex> findRoots(BigDecimal a, BigDecimal b, BigDecimal c, BigDecimal d, MathContext mathContext) {
         // n = 2b^3 - 9abc + 27(a^2)d
         BigDecimal n = b.pow(3).multiply(BigDecimal.valueOf(2))
                 .subtract(a.multiply(b).multiply(c).multiply(BigDecimal.valueOf(9)))
@@ -56,7 +56,8 @@ public class Cubic extends Method {
         System.out.println(t);
         System.out.println(u);
         System.out.println(roots.get(0));
-        return Arrays.asList(new BigDecimal("1"));
+
+        return Arrays.asList(BigComplex.valueOf(1));
     }
 
     private void addBigComplexRoot(List<BigDecimal> roots, BigComplex root) {
