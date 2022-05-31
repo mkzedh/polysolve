@@ -16,6 +16,6 @@ public class Result {
     }
 
     private static BigDecimal stripTrailingZerosAndRound(BigDecimal val, MathContext mathContext) {
-        return val.round(mathContext).stripTrailingZeros();
+        return val.stripTrailingZeros().round(mathContext);
     }
 }
