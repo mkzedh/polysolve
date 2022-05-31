@@ -8,7 +8,6 @@ import org.mkzh.polysolve.util.BigNumber;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Cubic extends Method {
@@ -23,13 +22,13 @@ public class Cubic extends Method {
                 .subtract(a.multiply(b).multiply(c).multiply(BigDecimal.valueOf(9)))
                 .add(a.pow(2).multiply(d).multiply(BigDecimal.valueOf(27)));
         // o = sqrt(n^2 - 4(b^2-3ac)^3)
-        BigDecimal o = BigDecimalMath.sqrt(n.pow(2)
+        BigComplex o = BigNumber.possiblyImaginarySquareRoot(n.pow(2)
                 .subtract(b.pow(2).subtract(a.multiply(c).multiply(BigDecimal.valueOf(3))).pow(3)
                         .multiply(BigDecimal.valueOf(4))), mathContext);
         // p = cbrt(0.5*(n+o))
-        BigDecimal p = getCubeRootOfHalf(n.add(o), mathContext);
+        BigComplex p = getCubeRootOfHalf(o.add(n), mathContext);
         //q = cbrt(0.5*(n-o))
-        BigDecimal q = getCubeRootOfHalf(n.subtract(o), mathContext);
+        BigComplex q = getCubeRootOfHalf(o.negate().add(n), mathContext);
         // r = -b/(3*a)
         BigDecimal r = divideBy3a(b.negate(), a, mathContext);
         // s = 1/(3*a)
@@ -39,33 +38,19 @@ public class Cubic extends Method {
         // u = (1-i*sqrt(3))/6*a
         BigComplex u = getComplexPart(a, false, mathContext);
 
-        List<BigDecimal> roots = new ArrayList<>();
+        List<BigComplex> roots = new ArrayList<>();
         // real root = r - s*p - s*q
-        roots.add(r.subtract(s.multiply(p)).subtract(s.multiply(q)));
+        roots.add(p.multiply(s).negate().subtract(q.multiply(s)).add(r));
         // possibly imaginary root 1 = r + t*p + u*q
-        addBigComplexRoot(roots, t.multiply(p).add(u.multiply(q)).add(r));
+        roots.add(t.multiply(p).add(u.multiply(q)).add(r));
         // possibly imaginary root 2 = r + u*p + t*q
-        addBigComplexRoot(roots, u.multiply(p).add(t.multiply(q)).add(r));
+        roots.add(u.multiply(p).add(t.multiply(q)).add(r));
 
-        System.out.println(n);
-        System.out.println(o);
-        System.out.println(p);
-        System.out.println(q);
-        System.out.println(r);
-        System.out.println(s);
-        System.out.println(t);
-        System.out.println(u);
-        System.out.println(roots.get(0));
-
-        return Arrays.asList(BigComplex.valueOf(1));
-    }
-
-    private void addBigComplexRoot(List<BigDecimal> roots, BigComplex root) {
-        System.out.println(root);
+        return roots;
     }
 
     // cbrt(0.5*val)
-    private BigDecimal getCubeRootOfHalf(BigDecimal val, MathContext mathContext) {
+    private BigComplex getCubeRootOfHalf(BigComplex val, MathContext mathContext) {
         return BigNumber.cubeRoot(val.multiply(BigDecimal.valueOf(0.5)), mathContext);
     }
 

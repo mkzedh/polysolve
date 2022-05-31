@@ -1,6 +1,7 @@
 package org.mkzh.polysolve.util;
 
 import ch.obermuhlner.math.big.BigComplex;
+import ch.obermuhlner.math.big.BigComplexMath;
 import ch.obermuhlner.math.big.BigDecimalMath;
 
 import java.math.BigDecimal;
@@ -21,10 +22,8 @@ public class BigNumber {
         return neg ? BigComplex.valueOf(res).multiply(BigComplex.I) : BigComplex.valueOf(res);
     }
 
-    public static BigDecimal cubeRoot(BigDecimal val, MathContext mathContext) {
-        boolean neg = isNegative(val);
-        BigDecimal res = BigDecimalMath.root(neg ? val.negate() : val, BigDecimal.valueOf(3), mathContext);
-        return neg ? res.negate() : res;
+    public static BigComplex cubeRoot(BigComplex val, MathContext mathContext) {
+        return val.equals(BigComplex.ZERO) ? BigComplex.ZERO : BigComplexMath.root(val, BigDecimal.valueOf(3), mathContext);
     }
 
     private static int compareToZero(BigDecimal val) {

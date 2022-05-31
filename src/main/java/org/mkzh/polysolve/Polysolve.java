@@ -13,11 +13,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class Polysolve {
+    private static final int DEFAULT_PRECISION = 64;
     private static final int SUPPLEMENTARY_PRECISION = 25;
 
     public static List<String> solve(String equation, String variable) throws EquationSyntaxException {
-        // default precision = 64
-        return solve(equation, variable, 64);
+        return solve(equation, variable, DEFAULT_PRECISION);
     }
 
     public static List<String> solve(String equation, String variable, int precision) throws EquationSyntaxException {
